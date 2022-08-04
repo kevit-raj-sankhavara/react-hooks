@@ -1,59 +1,58 @@
-import React, { useReducer, useState } from "react"
+import React, { useState, useEffect } from "react"
 
 function App() {
-  function reducer(todos, action) {
-    switch (action.type) {
-      case "add-todo":
-        return [...todos, action.payload]
-      case "toggle-todo":
-        return todos.map(todo => {
-          if (todo.id === action.payload.id)
-            return { ...todo, completed: !todo.completed }
-          return todo;
-        })
-      case "delete-todo":
-        return todos.filter(todo => todo.id !== action.payload.id)
-      default:
-        return todos
-    }
-  }
 
-  const [todos, dispatch] = useReducer(reducer, [])
-  const [value, setValue] = useState("")
+  const [ten, setTen] = useState(0);
+  const [twenty, setTwenty] = useState(0);
+  const [fifty, setFifty] = useState(0);
+  const [hundread, setHundread] = useState(0);
+  const [twoHnd, setTwoHnd] = useState(0);
+  const [fiveHnd, setFiveHnd] = useState(0);
+  const [twoThsn, setTwoThsn] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch({ type: "add-todo", payload: { id: Date.now(), name: value, completed: false } })
-    setValue("");
-  }
-
-  const toggleTodo = (id) => {
-    dispatch({ type: "toggle-todo", payload: { id } })
-  }
-
-  const deleteTodo = (id) => {
-    dispatch({ type: "delete-todo", payload: { id } })
-  }
-
+  useEffect(() => {
+    setTotal(ten * 10 + twenty * 20 + fifty * 50 + hundread * 100 + twoHnd * 200 + fiveHnd * 500 + twoThsn * 2000);
+  })
 
   return (
     <>
-      <h1>Your TODOS</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={value} onChange={(e) => setValue(e.target.value)} />
-        <button type="submit">add</button>
-      </form>
-      {
-        todos.map(todo => {
-          return (
-            <div>
-              <p style={{ color: todo.completed ? "gray" : "black" }}>{todo.name}</p>
-              <button onClick={() => toggleTodo(todo.id)}>Toggle</button>
-              <button onClick={() => deleteTodo(todo.id)}>Delete</button>
-            </div>
-          )
-        })
-      }
+      <div className="container">
+        <h1>Currency Counter</h1>
+        <div className="main my-4">
+          <div className="d-flex my-3">
+            <button className="btn btn-info mr-4 col-md-1">10</button>
+            <input type="number" className="form-control col-md-4" value={ten} onChange={(e) => setTen(e.target.value)} />
+          </div>
+          <div className="d-flex my-3">
+            <button className="btn btn-info mr-4 col-md-1">20</button>
+            <input type="number" className="form-control col-md-4" value={twenty} onChange={(e) => setTwenty(e.target.value)} />
+          </div>
+          <div className="d-flex my-3">
+            <button className="btn btn-info mr-4 col-md-1">50</button>
+            <input type="number" className="form-control col-md-4" value={fifty} onChange={(e) => setFifty(e.target.value)} />
+          </div>
+          <div className="d-flex my-3">
+            <button className="btn btn-info mr-4 col-md-1">100</button>
+            <input type="number" className="form-control col-md-4" value={hundread} onChange={(e) => setHundread(e.target.value)} />
+          </div>
+          <div className="d-flex my-3">
+            <button className="btn btn-info mr-4 col-md-1">200</button>
+            <input type="number" className="form-control col-md-4" value={twoHnd} onChange={(e) => setTwoHnd(e.target.value)} />
+          </div>
+          <div className="d-flex my-3">
+            < button className="btn btn-info mr-4 col-md-1">500</button >
+            <input type="number" className="form-control col-md-4" value={fiveHnd} onChange={(e) => setFiveHnd(e.target.value)} />
+          </div >
+          <div className="d-flex my-3">
+            <button button className="btn btn-info mr-4 col-md-1">2000</button >
+            <input type="number" className="form-control col-md-4" value={twoThsn} onChange={(e) => setTwoThsn(e.target.value)} />
+          </div >
+        </div >
+        <div>
+          <button className="btn btn-success mr-4 col-md-2">Total : {total}</button>
+        </div>
+      </div >
     </>
   )
 }
